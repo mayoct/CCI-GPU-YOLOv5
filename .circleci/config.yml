@@ -42,6 +42,7 @@ jobs:
           command: nvidia-smi
       - attach_workspace:
           at: .
+      
 
 workflows:
   mask_detection_training:
