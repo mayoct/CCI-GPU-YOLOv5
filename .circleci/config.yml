@@ -55,6 +55,17 @@ jobs:
           command: |
             python train.py --data ../MaskDataSet/data.yml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 16 --epachs 10
             cd ..
+      - run:
+          name: Test mask detection
+          command: |
+            cd yolov5
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 320 --conf 0.75 --source ../images/face_w_mask3.jpeg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 320 --conf 0.75 --source ../images/face_w_mask4.jpeg
+            python detect.py --weights ./runs/train/exp/weights/best.pt --img 320 --conf 0.75 --source ../images/face_wo_mask2.jpeg
+            zip -r runs/result.zip runs/detect runs/train/exp/weights                        
+      - store_artifacts:
+          path: yolov5/runs/result.zip
+          destination: result_on_gpu.zip
 
 workflows:
   mask_detection_training:
