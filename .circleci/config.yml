@@ -45,15 +45,16 @@ jobs:
       - run:
           name: Setup Python environment for YOLOv5
           command: |
+            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
             cd yolov5
+            pyenv install 3.7.11
+            pyenv local 3.7.11
             pip install -r requirements.txt
       - run:
           name: Train MaskDataSet
           command: |
-            cd yolov5
             python train.py --data ../MaskDataSet/data.yml --cfg yolov5s.yaml --weights yolov5s.pt --batch-size 16 --epachs 10
             cd ..
-
 
 workflows:
   mask_detection_training:
