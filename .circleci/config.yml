@@ -16,10 +16,19 @@ jobs:
           name: Clone YOLOv5 resources
           command: |
             git clone https://github.com/ultralytics/yolov5
+      - run:
+          name: Set up MaskDataSet from ROBOFLOW (needs registration)
+          command: |
+            mkdir MaskDataSet
+            cd MaskDataSet
+            curl -L "https://public.roboflow.com/ds/9rYgiWaqnY?key=$ROBOFLOW_KEY" > roboflow.zip; unzip roboflow.zip; rm roboflow.zip
+            cp ../data.yaml .
+            cd ..
       - persist_to_workspace:
           root: .
           paths:
             - "yolov5"
+            - "MaskDataSet"
 
   train_to_evaluate_on_gpu:
     machine:
