@@ -36,7 +36,6 @@ jobs:
       resource_class: gpu.nvidia.small
       image: ubuntu-2004-cuda-11.4:202110-01
     steps:
-      - checkout
       - run:
           name: Check GPU status
           command: nvidia-smi
@@ -47,6 +46,7 @@ jobs:
           command: |
             cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
             cd yolov5
+            pyenv update
             pyenv install 3.7.11
             pyenv local 3.7.11
             pip install -r requirements.txt
