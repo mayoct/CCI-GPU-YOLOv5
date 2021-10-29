@@ -44,7 +44,7 @@ jobs:
             pyenv install --skip-existing 3.9.4
             pyenv global 3.9.4
             pip install -r requirements.txt
-            ..
+            cd ..
       - run:
           name: Train MaskDataSet
           command: |
