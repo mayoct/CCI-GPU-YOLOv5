@@ -3,7 +3,25 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  setup_to_evaluate_on_gpu:
+  setup_on_container:
+    docker:
+      - image: cimg/python:3.7.11
+        auth:
+          username: $DOCKER_HUB_USERNAME
+          password: $DOCKER_HUB_ACCESS_TOKEN
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Clone YOLOv5 resources
+          command: |
+            git clone https://github.com/ultralytics/yolov5
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "yolov5"
+
+  train_to_evaluate_on_gpu:
     machine:
       resource_class: gpu.nvidia.small
       image: ubuntu-2004-cuda-11.4:202110-01
@@ -12,8 +30,10 @@ jobs:
       - run:
           name: Check GPU status
           command: nvidia-smi
+      - attach_workspace:
+          at: .
 
 workflows:
-  gpu-workflow:
+  mask_detection_training:
     jobs:
-      - setup_to_evaluate_on_gpu
+      - setup_on_container
