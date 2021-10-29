@@ -35,6 +35,7 @@ jobs:
       - run:
           name: Check GPU status
           command: nvidia-smi
+      - checkout
       - attach_workspace:
           at: .
       - run:
