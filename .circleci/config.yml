@@ -45,4 +45,6 @@ jobs:
 workflows:
   mask_detection_training:
     jobs:
-      - setup_on_container
+      - setup_on_container:
+          context:
+            - docker
