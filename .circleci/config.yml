@@ -18,6 +18,13 @@ jobs:
           command: |
             git clone https://github.com/ultralytics/yolov5
       - run:
+          name: Setup Python environment for YOLOv5
+          command: |
+            cd yolov5
+            pyenv install 3.7.10
+            pyenv local 3.7.10
+            pip install -r requirements.txt
+      - run:
           name: Set up MaskDataSet from ROBOFLOW (needs registration)
           command: |
             mkdir MaskDataSet
@@ -41,13 +48,6 @@ jobs:
           command: nvidia-smi
       - attach_workspace:
           at: .
-      - run:
-          name: Setup Python environment for YOLOv5
-          command: |
-            cd yolov5
-            pyenv install 3.7.10
-            pyenv local 3.7.10
-            pip install -r requirements.txt
       - run:
           name: Train MaskDataSet
           command: |
