@@ -3,25 +3,16 @@ version: 2.1
 jobs:
   setup_on_container:
     docker:
-      - image: cimg/python:3.7.10
+      - image: cimg/python:3.9.4
         auth:
           username: $DOCKER_HUB_USERNAME
           password: $DOCKER_HUB_ACCESS_TOKEN
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - run:
           name: Clone YOLOv5 resources
           command: |
             git clone https://github.com/ultralytics/yolov5
-      - run:
-          name: Setup Python environment for YOLOv5
-          command: |
-            cd yolov5
-            pyenv install --skip-existing 3.7.10
-            pyenv local 3.7.10
-            pip install -r requirements.txt
       - run:
           name: Set up MaskDataSet from ROBOFLOW (needs registration)
           command: |
@@ -50,7 +41,9 @@ jobs:
           name: Setup Python environment for YOLOv5
           command: |
             cd yolov5
-            pyenv local 3.7.10
+            pyenv install --skip-existing 3.9.4
+            pyenv local 3.9.4
+            pip install -r requirements.txt
       - run:
           name: Train MaskDataSet
           command: |
