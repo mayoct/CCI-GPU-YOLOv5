@@ -1,11 +1,9 @@
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   setup_on_container:
     docker:
-      - image: cimg/python:3.7.11
+      - image: cimg/python:3.7.10
         auth:
           username: $DOCKER_HUB_USERNAME
           password: $DOCKER_HUB_ACCESS_TOKEN
@@ -48,6 +46,11 @@ jobs:
           command: nvidia-smi
       - attach_workspace:
           at: .
+      - run:
+          name: Setup Python environment for YOLOv5
+          command: |
+            cd yolov5
+            pyenv local 3.7.10
       - run:
           name: Train MaskDataSet
           command: |
