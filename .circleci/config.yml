@@ -44,11 +44,9 @@ jobs:
       - run:
           name: Setup Python environment for YOLOv5
           command: |
-            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
             cd yolov5
-            pyenv update
-            pyenv install 3.7.11
-            pyenv local 3.7.11
+            pyenv install 3.7.10
+            pyenv local 3.7.10
             pip install -r requirements.txt
       - run:
           name: Train MaskDataSet
