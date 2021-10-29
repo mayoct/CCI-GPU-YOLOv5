@@ -19,7 +19,7 @@ jobs:
           name: Setup Python environment for YOLOv5
           command: |
             cd yolov5
-            pyenv install 3.7.10
+            pyenv install --skip-existing 3.7.10
             pyenv local 3.7.10
             pip install -r requirements.txt
       - run:
