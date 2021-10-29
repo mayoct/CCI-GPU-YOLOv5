@@ -10,6 +10,7 @@ jobs:
           username: $DOCKER_HUB_USERNAME
           password: $DOCKER_HUB_ACCESS_TOKEN
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run:
